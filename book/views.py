@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from .models import Book
 from .forms import BookForm
 
+from rest_framework import generics
+from .serializers import BookSerializer, BookListSerializer
+
 
 def index(request):
     books = Book.objects.order_by('-id')
@@ -10,7 +13,6 @@ def index(request):
         'book/index.html',
         {'title': 'Книги', 'books': books}
     )
-
 
 def detail(request, book_id):
     book = Book.get_by_id(book_id)
@@ -42,8 +44,20 @@ def add_book(request, book_id=0):
             form.save()
         return redirect('books')
 
-
 def del_book(request, book_id):
     book = Book.objects.get(pk=book_id)
     book.delete()
     return redirect('books')
+
+"""   Django REST methods   """
+
+class BookCreateView(generics.CreateAPIView):
+    serializer_class = BookSerializer
+
+class BookListView(generics.ListAPIView):
+    serializer_class = BookListSerializer
+    queryset = Book.objects.all()
+
+class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = BookSerializer
+    queryset = Book.objects.all()
