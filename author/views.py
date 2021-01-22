@@ -3,6 +3,9 @@ from .models import Author
 from book.models import Book
 from .forms import AuthorForm
 
+from rest_framework import generics
+from .serializers import AuthorSerializer, AuthorListSerializer
+
 
 def index(request):
     authors = Author.objects.order_by('-id')
@@ -11,7 +14,6 @@ def index(request):
         'author/index.html',
         {'title': 'Авторы', 'authors': authors}
     )
-
 
 def detail(request, author_id):
     author = Author.get_by_id(author_id)
@@ -45,9 +47,21 @@ def add_author(request, author_id=0):
             form.save()
     return redirect('authors')
 
-
-
 def del_author(request, author_id):
     author = Author.objects.get(pk=author_id)
     author.delete()
     return redirect('authors')
+
+"""   Django REST methods   """
+
+
+class AuthorCreateView(generics.CreateAPIView):
+    serializer_class = AuthorSerializer
+
+class AuthorListView(generics.ListAPIView):
+    serializer_class = AuthorListSerializer
+    queryset = Author.objects.all()
+
+class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = AuthorSerializer
+    queryset = Author.objects.all()

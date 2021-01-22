@@ -1,4 +1,5 @@
 from django.db import models, IntegrityError, DataError
+from django.contrib.auth import get_user_model
 
 from author.models import Author
 
