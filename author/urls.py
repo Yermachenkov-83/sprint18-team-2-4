@@ -8,7 +8,4 @@ urlpatterns = [
     path('/add_author', add_author, name='add_author'),
     path('add_author/<int:author_id>', add_author, name='add_author'),
     path('delete/<int:author_id>', del_author, name='del_author'),
-    path('create', AuthorCreateView.as_view()),
-    path('list', AuthorListView.as_view()),
-    path('detail/<int:pk>/', AuthorDetailView.as_view())
 ]

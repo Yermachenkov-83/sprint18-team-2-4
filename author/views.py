@@ -4,7 +4,6 @@ from book.models import Book
 from .forms import AuthorForm
 
 from rest_framework import generics
-from .serializers import AuthorSerializer, AuthorListSerializer
 
 
 def index(request):
@@ -52,16 +51,3 @@ def del_author(request, author_id):
     author.delete()
     return redirect('authors')
 
-"""   Django REST methods   """
-
-
-class AuthorCreateView(generics.CreateAPIView):
-    serializer_class = AuthorSerializer
-
-class AuthorListView(generics.ListAPIView):
-    serializer_class = AuthorListSerializer
-    queryset = Author.objects.all()
-
-class AuthorDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = AuthorSerializer
-    queryset = Author.objects.all()

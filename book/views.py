@@ -3,7 +3,7 @@ from .models import Book
 from .forms import BookForm
 
 from rest_framework import generics
-from .serializers import BookSerializer, BookListSerializer
+
 
 
 def index(request):
@@ -50,14 +50,3 @@ def del_book(request, book_id):
     return redirect('books')
 
 """   Django REST methods   """
-
-class BookCreateView(generics.CreateAPIView):
-    serializer_class = BookSerializer
-
-class BookListView(generics.ListAPIView):
-    serializer_class = BookListSerializer
-    queryset = Book.objects.all()
-
-class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = BookSerializer
-    queryset = Book.objects.all()

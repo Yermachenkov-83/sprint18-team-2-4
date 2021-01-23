@@ -7,7 +7,6 @@ import datetime
 from django.utils.formats import get_format
 
 
-
 class Order(models.Model):
     my_formats = get_format('DATETIME_FORMAT')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
